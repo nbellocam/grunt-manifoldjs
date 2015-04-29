@@ -1,6 +1,6 @@
 'use strict';
 
-var grunt = require('grunt');
+//var grunt = require('grunt');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -23,7 +23,7 @@ var grunt = require('grunt');
 */
 
 exports.manifold = {
-  setUp: function(done) {
+  /*setUp: function(done) {
     // setup here if necessary
     done();
   },
@@ -44,5 +44,5 @@ exports.manifold = {
     test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
 
     test.done();
-  },
+  },*/
 };

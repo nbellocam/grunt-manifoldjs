@@ -8,42 +8,72 @@
 
 'use strict';
 
+var manifoldjs = require('manifoldjs'),
+    manifestTools = manifoldjs.manifestTools,
+    projectBuilder = manifoldjs.projectBuilder,
+    path = require('path');
+
 module.exports = function(grunt) {
 
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('manifold', 'Generate chosted apps across platforms and devices', function() {
+  grunt.registerMultiTask('manifold', 'Generate hosted apps across platforms and devices', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
-      punctuation: '.',
-      separator: ', '
+      output: 'generatedApps',
+      platforms: ['chrome', 'firefox', 'android', 'ios', 'windows'],
+      buildProjects: false
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
+    if (!options.site) {
+      return grunt.fail.fatal('Required config properties "site" is missing.');
+    }
+
+    if (!options.site) {
+      return grunt.fail.fatal('Required config properties "manifestFilePath" is missing.');
+    }
+
+    //this.requiresConfig('options.site', 'options.manifestFilePath');
+
+    if (!grunt.file.exists(options.manifestFilePath) || !grunt.file.isFile(options.manifestFilePath)) {
+      return grunt.fail.fatal('"manifestFilePath" config property must target an existing manifest file.');
+    }
+
+    if (grunt.util.kindOf(options.platforms) !== 'array') {
+      return grunt.fail.fatal('"platforms" config property must be an array.');
+    }
+
+    if (grunt.util.kindOf(options.buildProjects) !== 'boolean') {
+      return grunt.fail.fatal('"buildProjects" config property must be a boolean.');
+    }
+
+    if (grunt.util.kindOf(options.output) !== 'string') {
+      return grunt.fail.fatal('"output" config property must be a string.');
+    }
+
+    var done = this.async();
+
+    //var manifestPath = path.join(process.cwd(), options.manifestFilePath);
+
+    manifestTools.getManifestFromFile(options.manifestFilePath, function (err, manifestInfo) {
+      if (err) {
+        grunt.fail.fatal('File error or invalid manifest format.');
+        return done(false);
+      }
+
+      grunt.file.mkdir(options.output);
+
+      projectBuilder.createApps(manifestInfo, options.output, options.platforms, options.buildProjects, function (err) {
+        if (err) {
+          // Build errors
+          grunt.fail.fatal('An error occurs while creating the apps.');
+          return done(false);
         }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
 
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
+        grunt.log.writeln('applications created!.');
+        done(true);
+      });
     });
   });
 
