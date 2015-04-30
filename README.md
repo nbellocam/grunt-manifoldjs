@@ -79,7 +79,6 @@ In this example, the default options are used.
 grunt.initConfig({
   manifold: {
     options: {
-      site : 'http://www.manifoldjs.com',
       manifestFilePath: 'manifest.json'
     }
   },

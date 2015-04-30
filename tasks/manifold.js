@@ -11,7 +11,8 @@
 var manifoldjs = require('manifoldjs'),
     manifestTools = manifoldjs.manifestTools,
     projectBuilder = manifoldjs.projectBuilder,
-    path = require('path');
+    path = require('path'),
+    url = require('url');
 
 module.exports = function(grunt) {
 
@@ -26,11 +27,7 @@ module.exports = function(grunt) {
       buildProjects: false
     });
 
-    if (!options.site) {
-      return grunt.fail.fatal('Required config properties "site" is missing.');
-    }
-
-    if (!options.site) {
+    if (!options.manifestFilePath) {
       return grunt.fail.fatal('Required config properties "manifestFilePath" is missing.');
     }
 
@@ -49,9 +46,9 @@ module.exports = function(grunt) {
     if (grunt.util.kindOf(options.output) !== 'string') {
       return grunt.fail.fatal('"output" config property must be a string.');
     }
-
+    
     if (!grunt.file.isDir(options.output)) {
-      if (!grunt.file.exists(options.output)) {
+      if (grunt.file.exists(options.output)) {
         return grunt.fail.fatal('"output" config property must be a directory.');
       }
     }
@@ -62,6 +59,16 @@ module.exports = function(grunt) {
       if (err) {
         grunt.fail.fatal('File error or invalid manifest format.');
         return done(false);
+      }
+      
+      var startUrl = manifestInfo.content.start_url;
+            
+      if (startUrl) {
+        var parsedSiteUrl = url.parse(startUrl);
+        if (parsedSiteUrl.hostname && parsedSiteUrl.protocol && !options.site) {
+          grunt.fail.fatal('You need to have a full url as start_url in the manifest or set the "site" config property.');
+          return done(false);
+        }
       }
 
       var outputPath = options.output;
