@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       output: 'generatedApps',
-      platforms: ['chrome', 'firefox', 'android', 'ios', 'windows81', 'windows10', 'web'],
+      platforms: ['chrome', 'firefox', 'android', 'ios', 'windows10', 'web'],
       buildProjects: false
     });
 
@@ -50,6 +50,12 @@ module.exports = function(grunt) {
       return grunt.fail.fatal('"output" config property must be a string.');
     }
 
+    if (!grunt.file.isDir(options.output)) {
+      if (!grunt.file.exists(options.output)) {
+        return grunt.fail.fatal('"output" config property must be a directory.');
+      }
+    }
+
     var done = this.async();
 
     manifestTools.getManifestFromFile(options.manifestFilePath, function (err, manifestInfo) {
@@ -58,10 +64,19 @@ module.exports = function(grunt) {
         return done(false);
       }
 
-      grunt.file.delete(options.output);
-      grunt.file.mkdir(options.output);
+      var outputPath = options.output;
 
-      projectBuilder.createApps(manifestInfo, options.output, options.platforms, options.buildProjects, function (err) {
+      if (grunt.file.exists(outputPath)) {
+        grunt.file.delete(outputPath);
+      }
+
+      grunt.file.mkdir(outputPath);
+
+      if (!grunt.file.isPathAbsolute(outputPath) && grunt.file.isPathInCwd(outputPath)) {
+        outputPath = path.join(process.cwd(), outputPath);
+      }
+
+      projectBuilder.createApps(manifestInfo, outputPath, options.platforms, options.buildProjects, function (err) {
         if (err) {
           // Build errors
           grunt.fail.fatal('An error occurs while creating the apps.');
