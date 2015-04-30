@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       output: 'generatedApps',
-      platforms: ['chrome', 'firefox', 'android', 'ios', 'windows'],
+      platforms: ['chrome', 'firefox', 'android', 'ios', 'windows81', 'windows10', 'web'],
       buildProjects: false
     });
 
@@ -58,6 +58,7 @@ module.exports = function(grunt) {
         return done(false);
       }
 
+      grunt.file.delete(options.output);
       grunt.file.mkdir(options.output);
 
       projectBuilder.createApps(manifestInfo, options.output, options.platforms, options.buildProjects, function (err) {
