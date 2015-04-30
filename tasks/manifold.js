@@ -34,8 +34,6 @@ module.exports = function(grunt) {
       return grunt.fail.fatal('Required config properties "manifestFilePath" is missing.');
     }
 
-    //this.requiresConfig('options.site', 'options.manifestFilePath');
-
     if (!grunt.file.exists(options.manifestFilePath) || !grunt.file.isFile(options.manifestFilePath)) {
       return grunt.fail.fatal('"manifestFilePath" config property must target an existing manifest file.');
     }
@@ -53,8 +51,6 @@ module.exports = function(grunt) {
     }
 
     var done = this.async();
-
-    //var manifestPath = path.join(process.cwd(), options.manifestFilePath);
 
     manifestTools.getManifestFromFile(options.manifestFilePath, function (err, manifestInfo) {
       if (err) {
