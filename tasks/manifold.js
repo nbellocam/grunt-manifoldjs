@@ -73,7 +73,7 @@ module.exports = function(grunt) {
       grunt.file.mkdir(outputPath);
 
       if (!grunt.file.isPathAbsolute(outputPath) && grunt.file.isPathInCwd(outputPath)) {
-        outputPath = path.join(process.cwd(), outputPath);
+        outputPath = path.resolve(process.cwd(), outputPath);
       }
 
       projectBuilder.createApps(manifestInfo, outputPath, options.platforms, options.buildProjects, function (err) {

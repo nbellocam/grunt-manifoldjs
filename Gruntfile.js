@@ -32,7 +32,7 @@ module.exports = function(grunt) {
     manifold: {
       default_options: {
         options: {
-          site : 'http://www.google.com',
+          site : 'http://www.manifoldjs.com',
           manifestFilePath: 'manifest.json'
         }
       }

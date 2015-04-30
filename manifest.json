@@ -1,8 +1,8 @@
 {
     "name": "ManifoldJs",
     "short_name": "ManifoldJs",
-    "start_url": "http://www.google.com/",
-    "scope": "http://www.google.com/*",
+    "start_url": "http://www.manifoldjs.com",
+    "scope": "http://www.manifoldjs.com*",
     "display": "fullscreen",
     "orientation": "portrait"
 }
