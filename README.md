@@ -27,63 +27,83 @@ grunt.initConfig({
   manifold: {
     options: {
       // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+    }
   },
 });
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.output
 
-A string value that is used to do something with whatever.
+- Type: `String`
+- Default value: `'generatedApps'`
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+The path to the output path.
 
-A string value that is used to do something else with whatever else.
+#### options.platforms
+
+- Type: `Array`
+- Default value: `'['chrome', 'firefox', 'android', 'ios', 'windows10', 'web']'`
+
+An array of platforms that will be created by ManifoldJs based on the manifest.json. Posibilities: 'chrome', 'firefox', 'android', 'ios', 'windows10', 'windows81', 'web'.
+
+#### options.buildProjects
+
+- Type: `Boolean`
+- Default value: `'buildProjects'`
+
+If true, then the iOS, Android and Windows81 projects will be builded.
+
+#### options.site
+
+- Type: `String`
+- Example: `'http://www.manifoldjs.com'`
+
+The target site url.
+
+#### options.manifestFilePath
+
+- Type: `String`
+- Example: `'www/manifest.json'`
+
+The path to the local manifest.
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
 
-```js
-grunt.initConfig({
-  manifold: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+In this example, the default options are used.
 
 ```js
 grunt.initConfig({
   manifold: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+      site : 'http://www.manifoldjs.com',
+      manifestFilePath: 'manifest.json'
+    }
   },
 });
 ```
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+#### Custom Options
+
+In this example, custom options are used.
+
+```js
+grunt.initConfig({
+  manifold: {
+    options: {
+      output: 'outputPath',
+      platforms: ['chrome', 'firefox', 'windows10', 'web'],
+      buildProjects: true,
+      site : 'http://www.manifoldjs.com',
+      manifestFilePath: 'www/manifest.json'
+    }
+  },
+});
+```
 
 ## Release History
+
 _(Nothing yet)_
