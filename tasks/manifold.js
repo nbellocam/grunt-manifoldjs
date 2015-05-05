@@ -65,9 +65,13 @@ module.exports = function(grunt) {
 
       if (startUrl) {
         var parsedSiteUrl = url.parse(startUrl);
-        if (parsedSiteUrl.hostname && parsedSiteUrl.protocol && !options.site) {
-          grunt.fail.fatal('You need to have a full url as start_url in the manifest or set the "site" config property.');
-          return done(false);
+        if (!parsedSiteUrl.hostname) {
+          if (!options.site) {
+            grunt.fail.fatal('You need to have a full url as start_url in the manifest or set the "site" config property.');
+            return done(false);
+          } else {
+            manifestInfo.content.start_url = options.site;
+          }
         }
       }
 
