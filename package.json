@@ -1,5 +1,5 @@
 {
-  "name": "grunt-manifold",
+  "name": "grunt-manifoldjs",
   "description": "Generate hosted apps across platforms and devices",
   "version": "0.1.0",
   "homepage": "https://github.com/nbellocam/grunt-manifoldjs",
@@ -36,7 +36,9 @@
     "grunt": "~0.4.5"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin",
+    "manifoldjs",
+    "hosted web apps"
   ],
   "dependencies": {
     "manifoldjs": "^0.1.0"

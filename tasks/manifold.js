@@ -19,7 +19,7 @@ module.exports = function(grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('manifold', 'Generate hosted apps across platforms and devices', function() {
+  grunt.registerMultiTask('manifoldjs', 'Generate hosted apps across platforms and devices', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       output: 'generatedApps',
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
     if (grunt.util.kindOf(options.output) !== 'string') {
       return grunt.fail.fatal('"output" config property must be a string.');
     }
-    
+
     if (!grunt.file.isDir(options.output)) {
       if (grunt.file.exists(options.output)) {
         return grunt.fail.fatal('"output" config property must be a directory.');
@@ -60,9 +60,9 @@ module.exports = function(grunt) {
         grunt.fail.fatal('File error or invalid manifest format.');
         return done(false);
       }
-      
+
       var startUrl = manifestInfo.content.start_url;
-            
+
       if (startUrl) {
         var parsedSiteUrl = url.parse(startUrl);
         if (parsedSiteUrl.hostname && parsedSiteUrl.protocol && !options.site) {
