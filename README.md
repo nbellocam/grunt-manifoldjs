@@ -24,7 +24,7 @@ In your project's Gruntfile, add a section named `manifold` to the data object p
 
 ```js
 grunt.initConfig({
-  manifold: {
+  manifoldjs: {
     options: {
       // Task-specific options go here.
     }
