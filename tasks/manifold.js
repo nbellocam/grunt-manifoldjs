@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       output: 'generatedApps',
-      platforms: ['chrome', 'firefox', 'android', 'ios', 'windows10', 'web'],
+      platforms: ['chrome', 'firefox', 'android', 'ios', 'windows10'],
       buildProjects: false
     });
 
