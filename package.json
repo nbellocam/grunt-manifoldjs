@@ -1,7 +1,7 @@
 {
   "name": "grunt-manifoldjs",
   "description": "Generate hosted apps across platforms and devices",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/nbellocam/grunt-manifoldjs",
   "author": {
     "name": "Nicolas Bello Camilletti"
@@ -30,7 +30,7 @@
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-jshint": "^0.9.2",
     "grunt-contrib-nodeunit": "^0.3.3",
-    "manifoldjs": "0.0.5"
+    "manifoldjs": "^0.1.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.5"
